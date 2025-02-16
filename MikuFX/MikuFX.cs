@@ -8,15 +8,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
+
 
 namespace MikuFX
 {
     public partial class MikuFX: Form
     {
+        private Bitmap imagenOriginal;
+        private Bitmap imagenFiltrada;
+        private FiltroImagen filtroImagen;
+        private VideoCapture videoCapture;
+        private Mat currentFrame;
+        private Timer videoTimer;
         public MikuFX()
         {
             InitializeComponent();
-            ConfigurarChart();
+            SetupVideoPlayer();
         }
 
         private void MikuFX_Load(object sender, EventArgs e)
@@ -32,13 +42,20 @@ namespace MikuFX
             cargarImagen.Click += btnCargarImagen_Click;
 
             ToolStripMenuItem guardarImagen = new ToolStripMenuItem("Guardar Imagen");
-            guardarImagen.Click += (s, e) => MessageBox.Show("Función de guardar imagen aún no implementada.");
+            guardarImagen.Click += btnGuardarImagen_Click;
 
             ToolStripMenuItem aplicarFiltro = new ToolStripMenuItem("Aplicar Filtro");
-            aplicarFiltro.Click += (s, e) => MessageBox.Show("Filtros aún no implementados.");
+            string[] filtros = { "Inverso", "Brillo+", "Brillo-", "Contraste+", "Contraste-", "Gaussiano", "Detección Bordes", "Ojo de Pez", "Color Shift", "Posterización", "Ruido", "Mosaico" };
+
+            foreach (var filtro in filtros)
+            {
+                ToolStripMenuItem itemFiltro = new ToolStripMenuItem(filtro);
+                itemFiltro.Click += (s, e) => AplicarFiltro(filtro);
+                aplicarFiltro.DropDownItems.Add(itemFiltro);
+            }
 
             ToolStripMenuItem borrarFiltro = new ToolStripMenuItem("Borrar Filtro");
-            borrarFiltro.Click += (s, e) => MessageBox.Show("Filtros aún no implementados.");
+            borrarFiltro.Click += btnBorrarFiltro_Click;
 
             menuOpciones.Items.Add(cargarImagen);
             menuOpciones.Items.Add(guardarImagen);
@@ -53,11 +70,15 @@ namespace MikuFX
             ToolStripMenuItem cargarVideo = new ToolStripMenuItem("Cargar Video");
             cargarVideo.Click += btnCargarVideo_Click;
 
-            ToolStripMenuItem aplicarFiltroVideo = new ToolStripMenuItem("Aplicar Filtro en Vivo");
+            ToolStripMenuItem aplicarFiltroVideo = new ToolStripMenuItem("Aplicar Filtro en Video");
+            aplicarFiltroVideo.Click += (s, e) => MessageBox.Show("Filtros en video aún no implementados.");
+
+            ToolStripMenuItem borrarFiltroVideo = new ToolStripMenuItem("Borrar Filtro en Video");
             aplicarFiltroVideo.Click += (s, e) => MessageBox.Show("Filtros en video aún no implementados.");
 
             menuOpciones.Items.Add(cargarVideo);
             menuOpciones.Items.Add(aplicarFiltroVideo);
+            menuOpciones.Items.Add(borrarFiltroVideo);
         }
 
         private void CambiarMenuCamara()
@@ -71,17 +92,41 @@ namespace MikuFX
             menuOpciones.Items.Add(activarCamara);
         }
 
-        private void ConfigurarChart()
+        private void ConfigurarChart(Chart chart, string nombreSerie, Color color)
         {
+            chart.ChartAreas.Clear();
+            chart.Series.Clear();
+
+            ChartArea chartArea = new ChartArea
+            {
+                AxisX = { Title = "Intensidad de color (0-255)" },
+                AxisY = { Title = "Frecuencia de píxeles" }
+            };
+
+            chart.ChartAreas.Add(chartArea);
+
+            Series serie = new Series(nombreSerie)
+            {
+                ChartType = SeriesChartType.Column, // Barras verticales
+                Color = color,
+                BorderWidth = 1
+            };
+
+            chart.Series.Add(serie);
+        }
+        private void ConfigurarHistogramas()
+        {
+            // Configurar el histograma general con R, G y B
             chartHistograma.ChartAreas.Clear();
             chartHistograma.Series.Clear();
 
-            ChartArea chartArea = new ChartArea();
-            chartArea.AxisX.Title = "Intensidad de color (0-255)";
-            chartArea.AxisY.Title = "Frecuencia de píxeles";
+            ChartArea chartArea = new ChartArea
+            {
+                AxisX = { Title = "Intensidad de color (0-255)" },
+                AxisY = { Title = "Frecuencia de píxeles" }
+            };
             chartHistograma.ChartAreas.Add(chartArea);
 
-            // Crear series para R, G y B
             string[] colores = { "Rojo", "Verde", "Azul" };
             Color[] coloresRGB = { Color.Red, Color.Green, Color.Blue };
 
@@ -89,12 +134,50 @@ namespace MikuFX
             {
                 Series serie = new Series(colores[i])
                 {
-                    ChartType = SeriesChartType.Column, // Barras verticales
+                    ChartType = SeriesChartType.Column,
                     Color = coloresRGB[i],
                     BorderWidth = 1
                 };
                 chartHistograma.Series.Add(serie);
             }
+
+            // Configurar los histogramas individuales
+            ConfigurarChart(chartImgRed, "Rojo", Color.Red);
+            ConfigurarChart(chartImgGreen, "Verde", Color.Green);
+            ConfigurarChart(chartImgBlue, "Azul", Color.Blue);
+        }
+
+        private void ConfigurarHistogramasVideo()
+        {
+            // Configurar el histograma general con R, G y B
+            chartVideoHistogram.ChartAreas.Clear();
+            chartVideoHistogram.Series.Clear();
+
+            ChartArea chartArea = new ChartArea
+            {
+                AxisX = { Title = "Intensidad de color (0-255)" },
+                AxisY = { Title = "Frecuencia de píxeles" }
+            };
+            chartVideoHistogram.ChartAreas.Add(chartArea);
+
+            string[] colores = { "Rojo", "Verde", "Azul" };
+            Color[] coloresRGB = { Color.Red, Color.Green, Color.Blue };
+
+            for (int i = 0; i < colores.Length; i++)
+            {
+                Series serie = new Series(colores[i])
+                {
+                    ChartType = SeriesChartType.Column,
+                    Color = coloresRGB[i],
+                    BorderWidth = 1
+                };
+                chartVideoHistogram.Series.Add(serie);
+            }
+
+            // Configurar los histogramas individuales
+            ConfigurarChart(chartVideoRed, "Rojo", Color.Red);
+            ConfigurarChart(chartVideoGreen, "Verde", Color.Green);
+            ConfigurarChart(chartVideoBlue, "Azul", Color.Blue);
         }
 
         private void GenerarHistograma(Bitmap imagen)
@@ -115,20 +198,151 @@ namespace MikuFX
                 }
             }
 
-            // Limpiar datos anteriores
-            foreach (var serie in chartHistograma.Series)
+            // Configurar los gráficos antes de llenarlos
+            ConfigurarHistogramas();
+
+            // Función para actualizar un chart específico
+            void ActualizarChart(Chart chart, string serieNombre, int[] datos)
             {
-                serie.Points.Clear();
+                if (chart.Series.FindByName(serieNombre) != null)
+                {
+                    chart.Series[serieNombre].Points.Clear();
+                    for (int i = 0; i < 256; i++)
+                    {
+                        chart.Series[serieNombre].Points.AddXY(i, datos[i]);
+                    }
+                }
             }
 
-            // Agregar datos al Chart
-            for (int i = 0; i < 256; i++)
+            // Llenar los datos en cada gráfico
+            ActualizarChart(chartHistograma, "Rojo", histogramaR);
+            ActualizarChart(chartHistograma, "Verde", histogramaG);
+            ActualizarChart(chartHistograma, "Azul", histogramaB);
+
+            ActualizarChart(chartImgRed, "Rojo", histogramaR);
+            ActualizarChart(chartImgGreen, "Verde", histogramaG);
+            ActualizarChart(chartImgBlue, "Azul", histogramaB);
+        }
+
+        private void GenerarHistogramaVideo(Mat frame)
+        {
+            int[] histogramaR = new int[256];
+            int[] histogramaG = new int[256];
+            int[] histogramaB = new int[256];
+
+            // Convertir el frame a Image<Bgr, byte> para facilitar el acceso a los píxeles
+            Image<Bgr, byte> imgBgr = frame.ToImage<Bgr, byte>();
+
+            // Recorrer cada píxel y contar los colores de cada canal
+            for (int y = 0; y < imgBgr.Height; y++)
             {
-                chartHistograma.Series["Rojo"].Points.AddXY(i, histogramaR[i]);
-                chartHistograma.Series["Verde"].Points.AddXY(i, histogramaG[i]);
-                chartHistograma.Series["Azul"].Points.AddXY(i, histogramaB[i]);
+                for (int x = 0; x < imgBgr.Width; x++)
+                {
+                    // Obtener el valor de cada canal (B, G, R)
+                    Bgr pixel = imgBgr[y, x];
+
+                    // Asegurarnos de que los valores de los canales sean enteros
+                    histogramaB[(int)pixel.Blue]++;
+                    histogramaG[(int)pixel.Green]++;
+                    histogramaR[(int)pixel.Red]++;
+                }
+            }
+
+            // Configurar los gráficos antes de llenarlos
+            ConfigurarHistogramasVideo();
+
+            // Función para actualizar un chart específico
+            void ActualizarChart(Chart chart, string serieNombre, int[] datos)
+            {
+                if (chart.Series.FindByName(serieNombre) != null)
+                {
+                    chart.Series[serieNombre].Points.Clear();
+                    for (int i = 0; i < 256; i++)
+                    {
+                        chart.Series[serieNombre].Points.AddXY(i, datos[i]);
+                    }
+                }
+            }
+
+            // Llenar los datos en cada gráfico
+            ActualizarChart(chartVideoHistogram, "Rojo", histogramaR);
+            ActualizarChart(chartVideoHistogram, "Verde", histogramaG);
+            ActualizarChart(chartVideoHistogram, "Azul", histogramaB);
+
+            ActualizarChart(chartVideoRed, "Rojo", histogramaR);
+            ActualizarChart(chartVideoGreen, "Verde", histogramaG);
+            ActualizarChart(chartVideoBlue, "Azul", histogramaB);
+        }
+
+
+        private void SetupVideoPlayer()
+        {
+            // Crea una nueva instancia de VideoCapture
+            videoCapture = new VideoCapture();
+
+            // Inicializa el temporizador que actualizará el video cada 33ms (aproximadamente 30 FPS)
+            videoTimer = new Timer();
+            videoTimer.Interval = 33; // Aproximadamente 30 FPS
+            videoTimer.Tick += VideoTimer_Tick;
+        }
+
+        // Método para cargar y reproducir el video
+        private void CargarVideo(string path)
+        {
+            videoCapture.Dispose(); // Libera cualquier captura previa
+
+            // Abre el video desde el archivo
+            videoCapture = new VideoCapture(path);
+
+            // Establece las dimensiones del panel de video según las dimensiones del video
+            panelReproductor.Size = new Size(videoCapture.Width, videoCapture.Height);
+
+            // Inicia la reproducción del video
+            videoTimer.Start();
+        }
+
+        // Evento que se ejecuta en cada tick del temporizador
+        private void VideoTimer_Tick(object sender, EventArgs e)
+        {
+            if (videoCapture.IsOpened)
+            {
+                // Lee el siguiente cuadro del video
+                currentFrame = videoCapture.QueryFrame();
+
+                // Convierte el cuadro a una imagen en formato Bitmap
+                if (currentFrame != null)
+                {
+                    Bitmap bitmap = currentFrame.ToBitmap();
+                    panelReproductor.BackgroundImage = bitmap;
+                    GenerarHistogramaVideo(currentFrame);
+                }
             }
         }
+
+        // Método para detener la reproducción del video
+        private void DetenerVideo()
+        {
+            if (videoCapture.IsOpened)
+            {
+                videoTimer.Stop();
+                videoCapture.Release();
+                panelReproductor.BackgroundImage = global::MikuFX.Properties.Resources.MikuError; // Imagen por defecto
+            }
+        }
+
+        // Llamado cuando el usuario selecciona cargar video
+        private void btnCargarVideo_Click(object sender, EventArgs e)
+        {
+            // Abrir el cuadro de diálogo para seleccionar el archivo de video
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Video Files|*.avi;*.mp4;*.mkv;*.mov;";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Cargar el video seleccionado
+                CargarVideo(openFileDialog.FileName);
+            }
+        }
+
 
         private void btnImagen_Click(object sender, EventArgs e)
         {
@@ -162,6 +376,49 @@ namespace MikuFX
 
         }
 
+        private void AplicarFiltro(string filtroNombre)
+        {
+            if (imagenOriginal == null)
+            {
+                MessageBox.Show("Carga una imagen antes de aplicar un filtro.");
+                return;
+            }
+
+            filtroImagen = new FiltroImagen(imagenOriginal);
+            imagenFiltrada = filtroImagen.AplicarFiltro(filtroNombre);
+            pictureBoxImagen.Image = imagenFiltrada;
+            GenerarHistograma(imagenFiltrada);
+        }
+
+        private void btnBorrarFiltro_Click(object sender, EventArgs e)
+        {
+            if (imagenOriginal != null)
+            {
+                pictureBoxImagen.Image = imagenOriginal;
+                GenerarHistograma(imagenOriginal);
+            }
+        }
+
+        private void btnGuardarImagen_Click(object sender, EventArgs e)
+        {
+            if (imagenFiltrada == null)
+            {
+                MessageBox.Show("No hay imagen filtrada para guardar.");
+                return;
+            }
+
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Archivos de imagen|*.jpg;*.png;*.bmp"
+            };
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                imagenFiltrada.Save(saveFileDialog.FileName);
+                MessageBox.Show("Imagen guardada exitosamente.");
+            }
+        }
+
         private void btnCargarImagen_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
@@ -171,19 +428,9 @@ namespace MikuFX
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                Bitmap imagen = new Bitmap(openFileDialog.FileName);
-                pictureBoxImagen.Image = imagen;
-                GenerarHistograma(imagen);
-            }
-        }
-
-        private void btnCargarVideo_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog { Filter = "Videos|*.mp4;*.avi;*.mov" };
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                MessageBox.Show("Video cargado: " + openFileDialog.FileName);
-                // Aquí más adelante agregaremos la funcionalidad para reproducir el video
+                imagenOriginal = new Bitmap(openFileDialog.FileName);
+                pictureBoxImagen.Image = imagenOriginal;
+                GenerarHistograma(imagenOriginal);
             }
         }
 
