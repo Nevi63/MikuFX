@@ -61,7 +61,7 @@ namespace MikuFX
         private Mat FiltroGaussiano(Mat frame)
         {
             Mat resultado = new Mat();
-            CvInvoke.GaussianBlur(frame, resultado, new System.Drawing.Size(5, 5), 0);
+            CvInvoke.GaussianBlur(frame, resultado, new System.Drawing.Size(15, 15), 2.0);
             return resultado;
         }
 
