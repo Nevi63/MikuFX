@@ -23,6 +23,9 @@ namespace MikuFX
         private VideoCapture videoCapture;
         private Mat currentFrame;
         private Timer videoTimer;
+        private bool isPlaying = false;
+        private bool isSeeking = false;
+        private string filtroSeleccionado = "Ninguno";
         public MikuFX()
         {
             InitializeComponent();
@@ -71,14 +74,78 @@ namespace MikuFX
             cargarVideo.Click += btnCargarVideo_Click;
 
             ToolStripMenuItem aplicarFiltroVideo = new ToolStripMenuItem("Aplicar Filtro en Video");
-            aplicarFiltroVideo.Click += (s, e) => MessageBox.Show("Filtros en video aún no implementados.");
+
+            // Definir los filtros de video
+            string[] filtrosVideo = { "Inverso", "Brillo+", "Brillo-", "Contraste+", "Contraste-", "Gaussiano", "Detección Bordes", "Ojo de Pez", "Color Shift", "Posterización", "Ruido", "Mosaico" };
+
+            // Crear un submenú para los filtros
+            ToolStripMenuItem filtrosSubMenu = new ToolStripMenuItem("Filtros");
+
+            foreach (var filtro in filtrosVideo)
+            {
+                ToolStripMenuItem filtroItem = new ToolStripMenuItem(filtro);
+                filtroItem.Click += (s, e) => SeleccionarFiltroVideo(filtro);  // Llamar a una función para aplicar el filtro
+                filtrosSubMenu.DropDownItems.Add(filtroItem);
+            }
+
+            aplicarFiltroVideo.DropDownItems.Add(filtrosSubMenu);
 
             ToolStripMenuItem borrarFiltroVideo = new ToolStripMenuItem("Borrar Filtro en Video");
-            aplicarFiltroVideo.Click += (s, e) => MessageBox.Show("Filtros en video aún no implementados.");
+            borrarFiltroVideo.Click += btnBorrarFiltroVideo_Click;
+
 
             menuOpciones.Items.Add(cargarVideo);
             menuOpciones.Items.Add(aplicarFiltroVideo);
             menuOpciones.Items.Add(borrarFiltroVideo);
+        }
+
+        private void SeleccionarFiltroVideo(string filtro)
+        {
+            if (videoCapture.IsOpened && isPlaying)
+            {
+                switch (filtro)
+                {
+                    case "Inverso":
+                        filtroSeleccionado = "Inverso";
+                        break;
+                    case "Brillo+":
+                        filtroSeleccionado = "Brillo+";
+                        break;
+                    case "Brillo-":
+                        filtroSeleccionado = "Brillo-";
+                        break;
+                    case "Contraste+":
+                        filtroSeleccionado = "Contraste+";
+                        break;
+                    case "Contraste-":
+                        filtroSeleccionado = "Contraste-";
+                        break;
+                    case "Gaussiano":
+                        filtroSeleccionado = "Gaussiano";
+                        break;
+                    case "Detección Bordes":
+                        filtroSeleccionado = "Detección Bordes";
+                        break;
+                    case "Ojo de Pez":
+                        filtroSeleccionado = "Ojo de Pez";
+                        break;
+                    case "Color Shift":
+                        filtroSeleccionado = "Color Shift";
+                        break;
+                    case "Posterización":
+                        filtroSeleccionado = "Posterización";
+                        break;
+                    case "Ruido":
+                        filtroSeleccionado = "Ruido";
+                        break;
+                    case "Mosaico":
+                        filtroSeleccionado = "Mosaico";
+                        break;
+                    default:
+                        filtroSeleccionado = "Ninguno";
+                        break;
+                }
+            }
         }
 
         private void CambiarMenuCamara()
@@ -284,51 +351,71 @@ namespace MikuFX
             videoTimer = new Timer();
             videoTimer.Interval = 33; // Aproximadamente 30 FPS
             videoTimer.Tick += VideoTimer_Tick;
+
+            // Configurar TrackBar
+            trackBarVideo.Minimum = 0;
+            trackBarVideo.TickFrequency = 10;
+            trackBarVideo.Scroll += TrackBarVideo_Scroll;
         }
 
         // Método para cargar y reproducir el video
         private void CargarVideo(string path)
         {
-            videoCapture.Dispose(); // Libera cualquier captura previa
-
-            // Abre el video desde el archivo
+            DetenerVideo(); // Detener cualquier video previo
             videoCapture = new VideoCapture(path);
 
-            // Establece las dimensiones del panel de video según las dimensiones del video
-            panelReproductor.Size = new Size(videoCapture.Width, videoCapture.Height);
+            // Configurar TrackBar según la duración del video
+            trackBarVideo.Maximum = (int)videoCapture.Get(CapProp.FrameCount);
+            trackBarVideo.Value = 0;
 
-            // Inicia la reproducción del video
+            isPlaying = true;
             videoTimer.Start();
         }
 
         // Evento que se ejecuta en cada tick del temporizador
         private void VideoTimer_Tick(object sender, EventArgs e)
         {
-            if (videoCapture.IsOpened)
+            if (videoCapture.IsOpened && isPlaying)
             {
-                // Lee el siguiente cuadro del video
                 currentFrame = videoCapture.QueryFrame();
 
-                // Convierte el cuadro a una imagen en formato Bitmap
                 if (currentFrame != null)
                 {
-                    Bitmap bitmap = currentFrame.ToBitmap();
-                    panelReproductor.BackgroundImage = bitmap;
-                    GenerarHistogramaVideo(currentFrame);
+                    // Aplicar el filtro al frame
+                    Mat frameProcesado = AplicarFiltroVideo(currentFrame, filtroSeleccionado);
+
+                    panelReproductor.BackgroundImage = frameProcesado.ToBitmap();
+                    GenerarHistogramaVideo(frameProcesado);
+
+                    // Actualizar TrackBar si no está siendo arrastrado
+                    if (!isSeeking)
+                    {
+                        trackBarVideo.Value = (int)videoCapture.Get(CapProp.PosFrames);
+                    }
+                }
+                else
+                {
+                    // Fin del video, detener
+                    DetenerVideo();
                 }
             }
         }
 
-        // Método para detener la reproducción del video
-        private void DetenerVideo()
+        private Mat AplicarFiltroVideo(Mat frame, string filtro)
         {
-            if (videoCapture.IsOpened)
+            if (frame == null)
             {
-                videoTimer.Stop();
-                videoCapture.Release();
-                panelReproductor.BackgroundImage = global::MikuFX.Properties.Resources.MikuError; // Imagen por defecto
+                MessageBox.Show("Carga un video antes de aplicar un filtro.");
+                return frame;
             }
+            else
+            {
+                FiltroVideo filtroVideo = new FiltroVideo(); // Crear una instancia
+                return filtroVideo.AplicarFiltro(frame, filtro); // Llamar al método de instancia
+            }
+
         }
+
 
         // Llamado cuando el usuario selecciona cargar video
         private void btnCargarVideo_Click(object sender, EventArgs e)
@@ -399,6 +486,11 @@ namespace MikuFX
             }
         }
 
+        private void btnBorrarFiltroVideo_Click(object sender, EventArgs e)
+        {
+            filtroSeleccionado = "Ninguno";
+        }
+
         private void btnGuardarImagen_Click(object sender, EventArgs e)
         {
             if (imagenFiltrada == null)
@@ -434,6 +526,8 @@ namespace MikuFX
             }
         }
 
+
+
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -442,6 +536,41 @@ namespace MikuFX
         private void textBoxColor_TextChanged(object sender, EventArgs e)
         {
 
+        }
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+            if (!isPlaying)
+            {
+                isPlaying = true;
+                videoTimer.Start();
+            }
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            isPlaying = false;
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            DetenerVideo();
+        }
+
+        // Método para detener el video
+        private void DetenerVideo()
+        {
+            isPlaying = false;
+            videoTimer.Stop();
+            videoCapture.Set(CapProp.PosFrames, 0); // Reiniciar al inicio
+            trackBarVideo.Value = 0;
+        }
+
+        // Evento cuando el usuario mueve la barra
+        private void TrackBarVideo_Scroll(object sender, EventArgs e)
+        {
+            isSeeking = true; // Evita que el Timer actualice la barra mientras el usuario la mueve
+            videoCapture.Set(CapProp.PosFrames, trackBarVideo.Value);
+            isSeeking = false;
         }
     }
 }

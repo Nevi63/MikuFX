@@ -29,34 +29,34 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea19 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend19 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea20 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend20 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea21 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend21 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series21 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea22 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend22 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series22 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MikuFX));
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea6 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend6 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea7 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend7 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series7 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea8 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend8 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series8 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea23 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend23 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series23 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea24 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend24 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series24 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea25 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend25 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series25 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea26 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend26 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series26 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea27 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend27 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series27 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnImagen = new System.Windows.Forms.Button();
@@ -77,7 +77,15 @@
             this.menuOpciones = new System.Windows.Forms.MenuStrip();
             this.panelVideo = new System.Windows.Forms.Panel();
             this.panelControles = new System.Windows.Forms.Panel();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.chartVideoHistogram = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.chartVideoRed = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.chartVideoGreen = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.chartVideoBlue = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
             this.btnPlay = new System.Windows.Forms.Button();
@@ -90,14 +98,6 @@
             this.chartHistogramaCamara = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.pictureBoxCamara = new System.Windows.Forms.PictureBox();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
-            this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.chartVideoRed = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.chartVideoGreen = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.chartVideoBlue = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.flowLayoutPanel1.SuspendLayout();
             this.panelImagen.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -112,19 +112,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagen)).BeginInit();
             this.panelVideo.SuspendLayout();
             this.panelControles.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartVideoHistogram)).BeginInit();
+            this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartVideoRed)).BeginInit();
+            this.tabPage7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartVideoGreen)).BeginInit();
+            this.tabPage8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartVideoBlue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVideo)).BeginInit();
             this.panelCamara.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartHistogramaCamara)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCamara)).BeginInit();
-            this.tabControl2.SuspendLayout();
-            this.tabPage5.SuspendLayout();
-            this.tabPage6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartVideoRed)).BeginInit();
-            this.tabPage7.SuspendLayout();
-            this.tabPage8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartVideoGreen)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartVideoBlue)).BeginInit();
             this.SuspendLayout();
             // 
             // contextMenuStrip1
@@ -229,16 +229,16 @@
             // 
             // chartHistograma
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartHistograma.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartHistograma.Legends.Add(legend1);
+            chartArea19.Name = "ChartArea1";
+            this.chartHistograma.ChartAreas.Add(chartArea19);
+            legend19.Name = "Legend1";
+            this.chartHistograma.Legends.Add(legend19);
             this.chartHistograma.Location = new System.Drawing.Point(-4, 0);
             this.chartHistograma.Name = "chartHistograma";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartHistograma.Series.Add(series1);
+            series19.ChartArea = "ChartArea1";
+            series19.Legend = "Legend1";
+            series19.Name = "Series1";
+            this.chartHistograma.Series.Add(series19);
             this.chartHistograma.Size = new System.Drawing.Size(358, 348);
             this.chartHistograma.TabIndex = 2;
             this.chartHistograma.Text = "chart1";
@@ -256,16 +256,16 @@
             // 
             // chartImgRed
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartImgRed.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartImgRed.Legends.Add(legend2);
+            chartArea20.Name = "ChartArea1";
+            this.chartImgRed.ChartAreas.Add(chartArea20);
+            legend20.Name = "Legend1";
+            this.chartImgRed.Legends.Add(legend20);
             this.chartImgRed.Location = new System.Drawing.Point(-4, 0);
             this.chartImgRed.Name = "chartImgRed";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartImgRed.Series.Add(series2);
+            series20.ChartArea = "ChartArea1";
+            series20.Legend = "Legend1";
+            series20.Name = "Series1";
+            this.chartImgRed.Series.Add(series20);
             this.chartImgRed.Size = new System.Drawing.Size(358, 347);
             this.chartImgRed.TabIndex = 4;
             this.chartImgRed.Text = "chart1";
@@ -283,16 +283,16 @@
             // 
             // chartImgGreen
             // 
-            chartArea3.Name = "ChartArea1";
-            this.chartImgGreen.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chartImgGreen.Legends.Add(legend3);
+            chartArea21.Name = "ChartArea1";
+            this.chartImgGreen.ChartAreas.Add(chartArea21);
+            legend21.Name = "Legend1";
+            this.chartImgGreen.Legends.Add(legend21);
             this.chartImgGreen.Location = new System.Drawing.Point(0, 0);
             this.chartImgGreen.Name = "chartImgGreen";
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chartImgGreen.Series.Add(series3);
+            series21.ChartArea = "ChartArea1";
+            series21.Legend = "Legend1";
+            series21.Name = "Series1";
+            this.chartImgGreen.Series.Add(series21);
             this.chartImgGreen.Size = new System.Drawing.Size(354, 347);
             this.chartImgGreen.TabIndex = 0;
             this.chartImgGreen.Text = "chart1";
@@ -310,16 +310,16 @@
             // 
             // chartImgBlue
             // 
-            chartArea4.Name = "ChartArea1";
-            this.chartImgBlue.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chartImgBlue.Legends.Add(legend4);
+            chartArea22.Name = "ChartArea1";
+            this.chartImgBlue.ChartAreas.Add(chartArea22);
+            legend22.Name = "Legend1";
+            this.chartImgBlue.Legends.Add(legend22);
             this.chartImgBlue.Location = new System.Drawing.Point(-4, 0);
             this.chartImgBlue.Name = "chartImgBlue";
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chartImgBlue.Series.Add(series4);
+            series22.ChartArea = "ChartArea1";
+            series22.Legend = "Legend1";
+            series22.Name = "Series1";
+            this.chartImgBlue.Series.Add(series22);
             this.chartImgBlue.Size = new System.Drawing.Size(358, 347);
             this.chartImgBlue.TabIndex = 0;
             this.chartImgBlue.Text = "chart1";
@@ -371,21 +371,125 @@
             this.panelControles.Size = new System.Drawing.Size(411, 560);
             this.panelControles.TabIndex = 1;
             // 
+            // tabControl2
+            // 
+            this.tabControl2.Controls.Add(this.tabPage5);
+            this.tabControl2.Controls.Add(this.tabPage6);
+            this.tabControl2.Controls.Add(this.tabPage7);
+            this.tabControl2.Controls.Add(this.tabPage8);
+            this.tabControl2.Location = new System.Drawing.Point(40, 7);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(359, 182);
+            this.tabControl2.TabIndex = 5;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.chartVideoHistogram);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(351, 156);
+            this.tabPage5.TabIndex = 0;
+            this.tabPage5.Text = "Histogram General";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
             // chartVideoHistogram
             // 
-            chartArea5.Name = "ChartArea1";
-            this.chartVideoHistogram.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.chartVideoHistogram.Legends.Add(legend5);
+            chartArea23.Name = "ChartArea1";
+            this.chartVideoHistogram.ChartAreas.Add(chartArea23);
+            legend23.Name = "Legend1";
+            this.chartVideoHistogram.Legends.Add(legend23);
             this.chartVideoHistogram.Location = new System.Drawing.Point(-4, 0);
             this.chartVideoHistogram.Name = "chartVideoHistogram";
-            series5.ChartArea = "ChartArea1";
-            series5.Legend = "Legend1";
-            series5.Name = "Series1";
-            this.chartVideoHistogram.Series.Add(series5);
+            series23.ChartArea = "ChartArea1";
+            series23.Legend = "Legend1";
+            series23.Name = "Series1";
+            this.chartVideoHistogram.Series.Add(series23);
             this.chartVideoHistogram.Size = new System.Drawing.Size(359, 160);
             this.chartVideoHistogram.TabIndex = 4;
             this.chartVideoHistogram.Text = "chart1";
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.chartVideoRed);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(351, 156);
+            this.tabPage6.TabIndex = 1;
+            this.tabPage6.Text = "Rojo";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // chartVideoRed
+            // 
+            chartArea24.Name = "ChartArea1";
+            this.chartVideoRed.ChartAreas.Add(chartArea24);
+            legend24.Name = "Legend1";
+            this.chartVideoRed.Legends.Add(legend24);
+            this.chartVideoRed.Location = new System.Drawing.Point(0, 0);
+            this.chartVideoRed.Name = "chartVideoRed";
+            series24.ChartArea = "ChartArea1";
+            series24.Legend = "Legend1";
+            series24.Name = "Series1";
+            this.chartVideoRed.Series.Add(series24);
+            this.chartVideoRed.Size = new System.Drawing.Size(355, 160);
+            this.chartVideoRed.TabIndex = 0;
+            this.chartVideoRed.Text = "chart1";
+            // 
+            // tabPage7
+            // 
+            this.tabPage7.Controls.Add(this.chartVideoGreen);
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage7.Size = new System.Drawing.Size(351, 156);
+            this.tabPage7.TabIndex = 2;
+            this.tabPage7.Text = "Verde";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // chartVideoGreen
+            // 
+            chartArea25.Name = "ChartArea1";
+            this.chartVideoGreen.ChartAreas.Add(chartArea25);
+            legend25.Name = "Legend1";
+            this.chartVideoGreen.Legends.Add(legend25);
+            this.chartVideoGreen.Location = new System.Drawing.Point(0, 0);
+            this.chartVideoGreen.Name = "chartVideoGreen";
+            series25.ChartArea = "ChartArea1";
+            series25.Legend = "Legend1";
+            series25.Name = "Series1";
+            this.chartVideoGreen.Series.Add(series25);
+            this.chartVideoGreen.Size = new System.Drawing.Size(355, 160);
+            this.chartVideoGreen.TabIndex = 0;
+            this.chartVideoGreen.Text = "chart1";
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.chartVideoBlue);
+            this.tabPage8.Location = new System.Drawing.Point(4, 22);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(351, 156);
+            this.tabPage8.TabIndex = 3;
+            this.tabPage8.Text = "Azul";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // chartVideoBlue
+            // 
+            chartArea26.Name = "ChartArea1";
+            this.chartVideoBlue.ChartAreas.Add(chartArea26);
+            legend26.Name = "Legend1";
+            this.chartVideoBlue.Legends.Add(legend26);
+            this.chartVideoBlue.Location = new System.Drawing.Point(-4, 0);
+            this.chartVideoBlue.Name = "chartVideoBlue";
+            series26.ChartArea = "ChartArea1";
+            series26.Legend = "Legend1";
+            series26.Name = "Series1";
+            this.chartVideoBlue.Series.Add(series26);
+            this.chartVideoBlue.Size = new System.Drawing.Size(359, 160);
+            this.chartVideoBlue.TabIndex = 0;
+            this.chartVideoBlue.Text = "chart1";
             // 
             // btnStop
             // 
@@ -396,6 +500,7 @@
             this.btnStop.Size = new System.Drawing.Size(139, 90);
             this.btnStop.TabIndex = 3;
             this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // btnPause
             // 
@@ -406,6 +511,7 @@
             this.btnPause.Size = new System.Drawing.Size(139, 90);
             this.btnPause.TabIndex = 2;
             this.btnPause.UseVisualStyleBackColor = true;
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             // 
             // btnPlay
             // 
@@ -416,6 +522,7 @@
             this.btnPlay.Size = new System.Drawing.Size(139, 90);
             this.btnPlay.TabIndex = 1;
             this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.btnPlay_Click);
             // 
             // trackBarVideo
             // 
@@ -480,16 +587,16 @@
             // 
             // chartHistogramaCamara
             // 
-            chartArea9.Name = "ChartArea1";
-            this.chartHistogramaCamara.ChartAreas.Add(chartArea9);
-            legend9.Name = "Legend1";
-            this.chartHistogramaCamara.Legends.Add(legend9);
+            chartArea27.Name = "ChartArea1";
+            this.chartHistogramaCamara.ChartAreas.Add(chartArea27);
+            legend27.Name = "Legend1";
+            this.chartHistogramaCamara.Legends.Add(legend27);
             this.chartHistogramaCamara.Location = new System.Drawing.Point(1150, 31);
             this.chartHistogramaCamara.Name = "chartHistogramaCamara";
-            series9.ChartArea = "ChartArea1";
-            series9.Legend = "Legend1";
-            series9.Name = "Series1";
-            this.chartHistogramaCamara.Series.Add(series9);
+            series27.ChartArea = "ChartArea1";
+            series27.Legend = "Legend1";
+            series27.Name = "Series1";
+            this.chartHistogramaCamara.Series.Add(series27);
             this.chartHistogramaCamara.Size = new System.Drawing.Size(300, 300);
             this.chartHistogramaCamara.TabIndex = 1;
             this.chartHistogramaCamara.Text = "chart1";
@@ -502,110 +609,6 @@
             this.pictureBoxCamara.Size = new System.Drawing.Size(1062, 554);
             this.pictureBoxCamara.TabIndex = 0;
             this.pictureBoxCamara.TabStop = false;
-            // 
-            // tabControl2
-            // 
-            this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Controls.Add(this.tabPage6);
-            this.tabControl2.Controls.Add(this.tabPage7);
-            this.tabControl2.Controls.Add(this.tabPage8);
-            this.tabControl2.Location = new System.Drawing.Point(40, 7);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(359, 182);
-            this.tabControl2.TabIndex = 5;
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.chartVideoHistogram);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(351, 156);
-            this.tabPage5.TabIndex = 0;
-            this.tabPage5.Text = "Histogram General";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.chartVideoRed);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(351, 156);
-            this.tabPage6.TabIndex = 1;
-            this.tabPage6.Text = "Rojo";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // chartVideoRed
-            // 
-            chartArea6.Name = "ChartArea1";
-            this.chartVideoRed.ChartAreas.Add(chartArea6);
-            legend6.Name = "Legend1";
-            this.chartVideoRed.Legends.Add(legend6);
-            this.chartVideoRed.Location = new System.Drawing.Point(0, 0);
-            this.chartVideoRed.Name = "chartVideoRed";
-            series6.ChartArea = "ChartArea1";
-            series6.Legend = "Legend1";
-            series6.Name = "Series1";
-            this.chartVideoRed.Series.Add(series6);
-            this.chartVideoRed.Size = new System.Drawing.Size(355, 160);
-            this.chartVideoRed.TabIndex = 0;
-            this.chartVideoRed.Text = "chart1";
-            // 
-            // tabPage7
-            // 
-            this.tabPage7.Controls.Add(this.chartVideoGreen);
-            this.tabPage7.Location = new System.Drawing.Point(4, 22);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(351, 156);
-            this.tabPage7.TabIndex = 2;
-            this.tabPage7.Text = "Verde";
-            this.tabPage7.UseVisualStyleBackColor = true;
-            // 
-            // tabPage8
-            // 
-            this.tabPage8.Controls.Add(this.chartVideoBlue);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(351, 156);
-            this.tabPage8.TabIndex = 3;
-            this.tabPage8.Text = "Azul";
-            this.tabPage8.UseVisualStyleBackColor = true;
-            // 
-            // chartVideoGreen
-            // 
-            chartArea7.Name = "ChartArea1";
-            this.chartVideoGreen.ChartAreas.Add(chartArea7);
-            legend7.Name = "Legend1";
-            this.chartVideoGreen.Legends.Add(legend7);
-            this.chartVideoGreen.Location = new System.Drawing.Point(0, 0);
-            this.chartVideoGreen.Name = "chartVideoGreen";
-            series7.ChartArea = "ChartArea1";
-            series7.Legend = "Legend1";
-            series7.Name = "Series1";
-            this.chartVideoGreen.Series.Add(series7);
-            this.chartVideoGreen.Size = new System.Drawing.Size(355, 160);
-            this.chartVideoGreen.TabIndex = 0;
-            this.chartVideoGreen.Text = "chart1";
-            // 
-            // chartVideoBlue
-            // 
-            chartArea8.Name = "ChartArea1";
-            this.chartVideoBlue.ChartAreas.Add(chartArea8);
-            legend8.Name = "Legend1";
-            this.chartVideoBlue.Legends.Add(legend8);
-            this.chartVideoBlue.Location = new System.Drawing.Point(-4, 0);
-            this.chartVideoBlue.Name = "chartVideoBlue";
-            series8.ChartArea = "ChartArea1";
-            series8.Legend = "Legend1";
-            series8.Name = "Series1";
-            this.chartVideoBlue.Series.Add(series8);
-            this.chartVideoBlue.Size = new System.Drawing.Size(359, 160);
-            this.chartVideoBlue.TabIndex = 0;
-            this.chartVideoBlue.Text = "chart1";
             // 
             // MikuFX
             // 
@@ -636,20 +639,20 @@
             this.panelVideo.ResumeLayout(false);
             this.panelControles.ResumeLayout(false);
             this.panelControles.PerformLayout();
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chartVideoHistogram)).EndInit();
+            this.tabPage6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartVideoRed)).EndInit();
+            this.tabPage7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartVideoGreen)).EndInit();
+            this.tabPage8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chartVideoBlue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVideo)).EndInit();
             this.panelCamara.ResumeLayout(false);
             this.panelCamara.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartHistogramaCamara)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCamara)).EndInit();
-            this.tabControl2.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chartVideoRed)).EndInit();
-            this.tabPage7.ResumeLayout(false);
-            this.tabPage8.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chartVideoGreen)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartVideoBlue)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

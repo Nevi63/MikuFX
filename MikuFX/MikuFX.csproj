@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FiltroImagen.cs" />
+    <Compile Include="FiltroVideo.cs" />
     <Compile Include="MikuFX.cs">
       <SubType>Form</SubType>
     </Compile>
