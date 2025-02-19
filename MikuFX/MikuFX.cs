@@ -11,7 +11,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
-
+using Emgu.CV.Util;
 
 namespace MikuFX
 {
@@ -26,10 +26,15 @@ namespace MikuFX
         private bool isPlaying = false;
         private bool isSeeking = false;
         private string filtroSeleccionado = "Ninguno";
+        private string filtroSeleccionadoCam = "Ninguno";
+        private VideoCapture _capture;
+        private bool _isCameraRunning = false;
+        private Color? colorSeleccionado = null; // Variable para almacenar el color seleccionado
         public MikuFX()
         {
             InitializeComponent();
             SetupVideoPlayer();
+            pictureBoxCamara.MouseClick += pictureBoxCamara_MouseClick;
         }
 
         private void MikuFX_Load(object sender, EventArgs e)
@@ -152,12 +157,90 @@ namespace MikuFX
         {
             menuOpciones.Items.Clear();
 
+            // Opción para activar la cámara
             ToolStripMenuItem activarCamara = new ToolStripMenuItem("Activar Cámara");
-            activarCamara.Click += (s, e) => MessageBox.Show("Cámara aún no implementada.");
+            activarCamara.Click += (s, e) => IniciarCamara(); // Llama a IniciarCamara()
 
+            // Opción para detener la cámara
+            ToolStripMenuItem detenerCamara = new ToolStripMenuItem("Detener Cámara");
+            detenerCamara.Click += (s, e) => DetenerCamara(); // Llama a DetenerCamara()
+
+            ToolStripMenuItem aplicarFiltroCamara = new ToolStripMenuItem("Aplicar Filtro en Camara");
+
+            // Definir los filtros de video
+            string[] filtrosCamara = { "Inverso", "Brillo+", "Brillo-", "Contraste+", "Contraste-", "Gaussiano", "Detección Bordes", "Ojo de Pez", "Color Shift", "Posterización", "Ruido", "Mosaico" };
+
+            // Crear un submenú para los filtros
+            ToolStripMenuItem filtrosSubMenuCam = new ToolStripMenuItem("Filtros");
+
+            foreach (var filtro in filtrosCamara)
+            {
+                ToolStripMenuItem filtroItem = new ToolStripMenuItem(filtro);
+                filtroItem.Click += (s, e) => SeleccionarFiltroCamara(filtro);  // Llamar a una función para aplicar el filtro
+                filtrosSubMenuCam.DropDownItems.Add(filtroItem);
+            }
+
+            aplicarFiltroCamara.DropDownItems.Add(filtrosSubMenuCam);
+
+            ToolStripMenuItem borrarFiltroCamara = new ToolStripMenuItem("Borrar Filtro en Video");
+            borrarFiltroCamara.Click += btnBorrarFiltroCamara_Click;
 
             menuOpciones.Items.Add(activarCamara);
+            menuOpciones.Items.Add(detenerCamara);
+            menuOpciones.Items.Add(aplicarFiltroCamara);
+            menuOpciones.Items.Add(borrarFiltroCamara);
+
         }
+
+        private void SeleccionarFiltroCamara(string filtro)
+        {
+            if (_isCameraRunning)
+            {
+                switch (filtro)
+                {
+                    case "Inverso":
+                        filtroSeleccionadoCam = "Inverso";
+                        break;
+                    case "Brillo+":
+                        filtroSeleccionadoCam = "Brillo+";
+                        break;
+                    case "Brillo-":
+                        filtroSeleccionadoCam = "Brillo-";
+                        break;
+                    case "Contraste+":
+                        filtroSeleccionadoCam = "Contraste+";
+                        break;
+                    case "Contraste-":
+                        filtroSeleccionadoCam = "Contraste-";
+                        break;
+                    case "Gaussiano":
+                        filtroSeleccionadoCam = "Gaussiano";
+                        break;
+                    case "Detección Bordes":
+                        filtroSeleccionadoCam = "Detección Bordes";
+                        break;
+                    case "Ojo de Pez":
+                        filtroSeleccionadoCam = "Ojo de Pez";
+                        break;
+                    case "Color Shift":
+                        filtroSeleccionadoCam = "Color Shift";
+                        break;
+                    case "Posterización":
+                        filtroSeleccionadoCam = "Posterización";
+                        break;
+                    case "Ruido":
+                        filtroSeleccionadoCam = "Ruido";
+                        break;
+                    case "Mosaico":
+                        filtroSeleccionadoCam = "Mosaico";
+                        break;
+                    default:
+                        filtroSeleccionadoCam = "Ninguno";
+                        break;
+                }
+            }
+        }
+
 
         private void ConfigurarChart(Chart chart, string nombreSerie, Color color)
         {
@@ -416,6 +499,213 @@ namespace MikuFX
 
         }
 
+        private void IniciarCamara()
+        {
+            if (_isCameraRunning) return; // Evita iniciar la cámara más de una vez
+
+            try
+            {
+                _capture = new VideoCapture(0); // Índice 0 para la cámara predeterminada
+                _capture.ImageGrabbed += ProcesarFrame;
+                _capture.Start();
+                _isCameraRunning = true;
+                ConfigurarHistogramasCamara();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al iniciar la cámara: " + ex.Message);
+            }
+        }
+
+        private void ConfigurarHistogramasCamara()
+        {
+            // Configurar el histograma general con R, G y B
+            chartHistogramaCamara.ChartAreas.Clear();
+            chartHistogramaCamara.Series.Clear();
+
+            ChartArea chartArea = new ChartArea
+            {
+                AxisX = { Title = "Intensidad de color (0-255)" },
+                AxisY = { Title = "Frecuencia de píxeles" }
+            };
+            chartHistogramaCamara.ChartAreas.Add(chartArea);
+
+            string[] colores = { "Rojo", "Verde", "Azul" };
+            Color[] coloresRGB = { Color.Red, Color.Green, Color.Blue };
+
+            for (int i = 0; i < colores.Length; i++)
+            {
+                Series serie = new Series(colores[i])
+                {
+                    ChartType = SeriesChartType.Column,
+                    Color = coloresRGB[i],
+                    BorderWidth = 1
+                };
+                chartHistogramaCamara.Series.Add(serie);
+            }
+
+            // Configurar los histogramas individuales
+            ConfigurarChart(chartCamRed, "Rojo", Color.Red);
+            ConfigurarChart(chartCamGreen, "Verde", Color.Green);
+            ConfigurarChart(chartCamBlue, "Azul", Color.Blue);
+        }
+
+        private void GenerarHistogramaCamara(Mat frame)
+        {
+            int[] histogramaR = new int[256];
+            int[] histogramaG = new int[256];
+            int[] histogramaB = new int[256];
+
+            Image<Bgr, byte> imgBgr = frame.ToImage<Bgr, byte>();
+
+            for (int y = 0; y < imgBgr.Height; y++)
+            {
+                for (int x = 0; x < imgBgr.Width; x++)
+                {
+                    Bgr pixel = imgBgr[y, x];
+                    histogramaB[(int)pixel.Blue]++;
+                    histogramaG[(int)pixel.Green]++;
+                    histogramaR[(int)pixel.Red]++;
+                }
+            }
+
+            // Actualizar gráficos en el hilo de la UI
+            ActualizarChart(chartHistogramaCamara, "Rojo", histogramaR);
+            ActualizarChart(chartHistogramaCamara, "Verde", histogramaG);
+            ActualizarChart(chartHistogramaCamara, "Azul", histogramaB);
+
+            ActualizarChart(chartCamRed, "Rojo", histogramaR);
+            ActualizarChart(chartCamGreen, "Verde", histogramaG);
+            ActualizarChart(chartCamBlue, "Azul", histogramaB);
+        }
+
+        private void ActualizarChart(Chart chart, string serieNombre, int[] datos)
+        {
+            if (chart.InvokeRequired)
+            {
+                chart.Invoke(new Action(() => ActualizarChart(chart, serieNombre, datos)));
+            }
+            else
+            {
+                if (chart.Series.FindByName(serieNombre) != null)
+                {
+                    chart.Series[serieNombre].Points.Clear();
+                    for (int i = 0; i < 256; i++)
+                    {
+                        chart.Series[serieNombre].Points.AddXY(i, datos[i]);
+                    }
+                }
+            }
+        }
+
+        private void ProcesarFrame(object sender, EventArgs e)
+        {
+            if (_capture == null || !_isCameraRunning) return;
+
+            Mat frame = new Mat();
+            _capture.Retrieve(frame);
+
+            if (!frame.IsEmpty)
+            {
+                // Aplicar filtro seleccionado
+                Mat frameProcesado = AplicarFiltroVideo(frame, filtroSeleccionadoCam);
+
+                // Si hay detección de color activa, aplicar la detección en CIELAB
+                Image<Bgr, byte> imgBgr = frameProcesado.ToImage<Bgr, byte>();
+                if (colorSeleccionado.HasValue)
+                {
+                    imgBgr = FiltrarColorCIELAB(imgBgr, colorSeleccionado.Value);
+                }
+
+                // Mostrar la imagen procesada en el PictureBox
+                if (pictureBoxCamara.InvokeRequired)
+                {
+                    pictureBoxCamara.Invoke(new Action(() => pictureBoxCamara.Image = imgBgr.ToBitmap()));
+                }
+                else
+                {
+                    pictureBoxCamara.Image = imgBgr.ToBitmap();
+                }
+
+                // Generar histograma del frame procesado
+                GenerarHistogramaCamara(frameProcesado);
+            }
+        }
+
+        private Image<Bgr, byte> FiltrarColorCIELAB(Image<Bgr, byte> imagen, Color colorBase)
+        {
+            // Convertir la imagen a espacio de color Lab
+            Mat matLab = new Mat();
+            CvInvoke.CvtColor(imagen.Mat, matLab, ColorConversion.Bgr2Lab);
+
+            // Obtener los valores Lab del color base
+            byte[] colorLabBase = RgbToLab(colorBase);
+
+            Image<Bgr, byte> resultado = new Image<Bgr, byte>(imagen.Size);
+
+            // Convertir Mat a Image para facilitar el acceso a píxeles
+            using (Image<Lab, byte> imgLab = matLab.ToImage<Lab, byte>())
+            {
+                for (int y = 0; y < imagen.Height; y++)
+                {
+                    for (int x = 0; x < imagen.Width; x++)
+                    {
+                        byte[] pixelLab = new byte[3];
+                        pixelLab[0] = imgLab.Data[y, x, 0]; // L
+                        pixelLab[1] = imgLab.Data[y, x, 1]; // a
+                        pixelLab[2] = imgLab.Data[y, x, 2]; // b
+
+                        double distancia = Math.Sqrt(
+                            Math.Pow(pixelLab[0] - colorLabBase[0], 2) +
+                            Math.Pow(pixelLab[1] - colorLabBase[1], 2) +
+                            Math.Pow(pixelLab[2] - colorLabBase[2], 2));
+
+                        if (distancia < 30)
+                        {
+                            resultado[y, x] = imagen[y, x];
+                        }
+                        else
+                        {
+                            resultado[y, x] = new Bgr(0, 0, 0);
+                        }
+                    }
+                }
+            }
+            return resultado;
+        }
+
+        private byte[] RgbToLab(Color color)
+        {
+            // Crear una imagen de un solo píxel con el color RGB
+            using (Image<Bgr, byte> colorImage = new Image<Bgr, byte>(1, 1, new Bgr(color.B, color.G, color.R)))
+            {
+                Mat labMat = new Mat();
+                CvInvoke.CvtColor(colorImage.Mat, labMat, ColorConversion.Bgr2Lab);
+
+                using (Image<Lab, byte> labImage = labMat.ToImage<Lab, byte>())
+                {
+                    return new byte[]
+                    {
+                labImage.Data[0, 0, 0],  // L
+                labImage.Data[0, 0, 1],  // a
+                labImage.Data[0, 0, 2]   // b
+                    };
+                }
+            }
+        }
+
+
+        private void DetenerCamara()
+        {
+            if (_capture != null && _isCameraRunning)
+            {
+                _capture.Stop();
+                _capture.Dispose();
+                _capture = null;
+                _isCameraRunning = false;
+            }
+        }
+
 
         // Llamado cuando el usuario selecciona cargar video
         private void btnCargarVideo_Click(object sender, EventArgs e)
@@ -489,6 +779,11 @@ namespace MikuFX
         private void btnBorrarFiltroVideo_Click(object sender, EventArgs e)
         {
             filtroSeleccionado = "Ninguno";
+        }
+
+        private void btnBorrarFiltroCamara_Click(object sender, EventArgs e)
+        {
+            filtroSeleccionadoCam = "Ninguno";
         }
 
         private void btnGuardarImagen_Click(object sender, EventArgs e)
@@ -572,5 +867,69 @@ namespace MikuFX
             videoCapture.Set(CapProp.PosFrames, trackBarVideo.Value);
             isSeeking = false;
         }
+
+        private void btnDetectar_Click(object sender, EventArgs e)
+        {
+            using (ColorDialog colorDialog = new ColorDialog())
+            {
+                if (colorDialog.ShowDialog() == DialogResult.OK)
+                {
+                    colorSeleccionado = colorDialog.Color;
+                }
+            }
+        }
+
+        private void btnNoDetectar_Click(object sender, EventArgs e)
+        {
+            colorSeleccionado = null; // Desactivar detección de color
+        }
+
+        private void pictureBoxCamara_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (pictureBoxCamara.Image == null) return;
+
+            // Convertir la imagen en un Bitmap para obtener el color del pixel clickeado
+            Bitmap bitmap = new Bitmap(pictureBoxCamara.Image);
+
+            // Verificar que el click está dentro de la imagen
+            if (e.X < 0 || e.Y < 0 || e.X >= bitmap.Width || e.Y >= bitmap.Height) return;
+
+            // Obtener el color RGB del pixel clickeado
+            Color colorRGB = bitmap.GetPixel(e.X, e.Y);
+
+            // Convertir el color a CIELAB
+            MCvScalar colorLab = ConvertirRGBaCIELAB(colorRGB);
+
+            // Mostrar el color en pictureBoxColorDetectado
+            pictureBoxColorDetectado.BackColor = colorRGB;
+
+            // Mostrar la información en labelDeteccion
+            labelDeteccion.Text = $"L: {colorLab.V0:F2}, A: {colorLab.V1:F2}, B: {colorLab.V2:F2}";
+
+            // Mostrar la información en RGB
+            labelRGB.Text = $"RGB: {colorRGB.R}, {colorRGB.G}, {colorRGB.B}";
+
+            // Convertir el color a formato hexadecimal
+            string hexColor = $"#{colorRGB.R:X2}{colorRGB.G:X2}{colorRGB.B:X2}";
+            labelHexa.Text = $"Hex: {hexColor}";
+        }
+
+        private MCvScalar ConvertirRGBaCIELAB(Color color)
+        {
+            // Crear una imagen de 1x1 con el color RGB
+            Image<Bgr, byte> imgBgr = new Image<Bgr, byte>(1, 1, new Bgr(color.B, color.G, color.R));
+
+            // Convertir a CIELAB
+            Image<Lab, byte> imgLab = imgBgr.Convert<Lab, byte>();
+
+            // Acceder directamente a los valores usando Data
+            return new MCvScalar(
+                imgLab.Data[0, 0, 0],  // L component
+                imgLab.Data[0, 0, 1],  // a component
+                imgLab.Data[0, 0, 2]   // b component
+            );
+        }
+
+
     }
 }
