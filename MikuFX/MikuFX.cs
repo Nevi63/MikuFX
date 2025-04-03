@@ -817,6 +817,7 @@ namespace MikuFX
             {
                 imagenOriginal = new Bitmap(openFileDialog.FileName);
                 pictureBoxImagen.Image = imagenOriginal;
+                pictureBoxImagenOriginal.Image = imagenOriginal;
                 GenerarHistograma(imagenOriginal);
             }
         }
